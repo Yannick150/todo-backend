@@ -1,4 +1,4 @@
-package nl.yannick.todobackend.Todo.Dtos;
+package nl.yannick.todobackend.todo.dtos;
 
 import java.time.OffsetDateTime;
 import java.util.Set;

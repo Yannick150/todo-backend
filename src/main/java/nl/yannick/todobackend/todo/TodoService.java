@@ -1,14 +1,16 @@
-package nl.yannick.todobackend.Todo;
+package nl.yannick.todobackend.todo;
 
-import nl.yannick.todobackend.Todo.Dtos.CreateTodoRequest;
-import nl.yannick.todobackend.Todo.Dtos.TodoResult;
-import nl.yannick.todobackend.Todo.Dtos.TodoResultSet;
-import nl.yannick.todobackend.Todo.Dtos.UpdateTodoRequest;
-import nl.yannick.todobackend.Todo.Errors.TodoNotFoundException;
-import nl.yannick.todobackend.Todo.Mappers.TodoMapper;
+import nl.yannick.todobackend.todo.dtos.CreateTodoRequest;
+import nl.yannick.todobackend.todo.dtos.TodoResult;
+import nl.yannick.todobackend.todo.dtos.TodoResultSet;
+import nl.yannick.todobackend.todo.dtos.UpdateTodoRequest;
+import nl.yannick.todobackend.todo.errors.TodoNotFoundException;
+import nl.yannick.todobackend.todo.mappers.TodoMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -38,12 +40,7 @@ public class TodoService {
         var todo = new Todo();
         todo.setName(req.name());
         todo.setDescription(req.description());
-
-        //TODO: duplicate
-        if(req.tags() != null){
-            var tagsString = String.join(",", req.tags());
-            todo.setTags(tagsString);
-        }
+        todo.setTags(setTagsIfPresent(Optional.ofNullable(req.tags())));
 
         todo.setDeadline(req.deadline());
         todo.setCompleted(false);
@@ -56,12 +53,7 @@ public class TodoService {
         var todo = repo.findById(id).orElseThrow(() -> new TodoNotFoundException(id));
         if (req.name() != null) todo.setName(req.name());
         if (req.description() != null) todo.setDescription(req.description());
-
-        //TODO: duplicate
-        if(req.tags() != null){
-            var tagsString = String.join(",", req.tags());
-            todo.setTags(tagsString);
-        }
+        todo.setTags(setTagsIfPresent(Optional.ofNullable(req.tags())));
 
         if (req.deadline() != null) todo.setDeadline(req.deadline());
         if (req.completed() != null) todo.setCompleted(req.completed());
@@ -73,5 +65,9 @@ public class TodoService {
     public void delete(UUID id) {
         if (!repo.existsById(id)) throw new TodoNotFoundException(id);
         repo.deleteById(id);
+    }
+
+    private String setTagsIfPresent(Optional<Set<String>> tags){
+        return tags.map(strings -> String.join(",", strings)).orElse(null);
     }
 }

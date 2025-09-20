@@ -1,10 +1,8 @@
-package nl.yannick.todobackend.Todo.Mappers;
+package nl.yannick.todobackend.todo.mappers;
 
-import nl.yannick.todobackend.Todo.Dtos.CreateTodoRequest;
-import nl.yannick.todobackend.Todo.Dtos.TodoResult;
-import nl.yannick.todobackend.Todo.Dtos.TodoResultSet;
-import nl.yannick.todobackend.Todo.Dtos.UpdateTodoRequest;
-import nl.yannick.todobackend.Todo.Todo;
+import nl.yannick.todobackend.todo.dtos.TodoResult;
+import nl.yannick.todobackend.todo.dtos.TodoResultSet;
+import nl.yannick.todobackend.todo.Todo;
 import org.mapstruct.*;
 
 import java.util.HashSet;

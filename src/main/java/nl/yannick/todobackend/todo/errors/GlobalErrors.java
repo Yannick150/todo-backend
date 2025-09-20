@@ -1,4 +1,4 @@
-package nl.yannick.todobackend.Todo.Errors;
+package nl.yannick.todobackend.todo.errors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;

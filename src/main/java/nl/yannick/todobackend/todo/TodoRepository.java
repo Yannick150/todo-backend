@@ -1,4 +1,4 @@
-package nl.yannick.todobackend.Todo;
+package nl.yannick.todobackend.todo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

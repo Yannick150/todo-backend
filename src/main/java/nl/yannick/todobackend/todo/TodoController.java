@@ -1,9 +1,9 @@
-package nl.yannick.todobackend.Todo;
+package nl.yannick.todobackend.todo;
 
-import nl.yannick.todobackend.Todo.Dtos.CreateTodoRequest;
-import nl.yannick.todobackend.Todo.Dtos.TodoResult;
-import nl.yannick.todobackend.Todo.Dtos.TodoResultSet;
-import nl.yannick.todobackend.Todo.Dtos.UpdateTodoRequest;
+import nl.yannick.todobackend.todo.dtos.CreateTodoRequest;
+import nl.yannick.todobackend.todo.dtos.TodoResult;
+import nl.yannick.todobackend.todo.dtos.TodoResultSet;
+import nl.yannick.todobackend.todo.dtos.UpdateTodoRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
