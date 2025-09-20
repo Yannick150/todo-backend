@@ -14,87 +14,44 @@ public class Todo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Getter
+    @Setter
     @Column(name = "Id")
     private UUID id;
 
     @NotBlank
+    @Getter
+    @Setter
     private String name;
 
+    //TODO should not be max
     @Column(columnDefinition = "nvarchar(max)")
+    @Getter
+    @Setter
     private String description;
 
+    //TODO should not be max
     @Column(columnDefinition = "nvarchar(max)")
     @Getter
     @Setter
     private String tags;
 
+    @Column(nullable = false)
+    @Getter
     private OffsetDateTime createdAt;
 
+    @Getter
+    @Setter
     private OffsetDateTime deadline;
 
-    @Column(name = "Completed", nullable = false)
+    @Column(nullable = false)
+    @Getter
+    @Setter
     private boolean completed;
 
-    //TODO: what???
+    //Before first insert, check if there is a createdAt, otherwise insert it.
     @PrePersist
     void onCreate() {
         if (createdAt == null) createdAt = OffsetDateTime.now();
-    }
-
-    //TODO: cleanup what we don't use/need
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-//    public Set<String> getTags() {
-//        return tags;
-//    }
-//
-//    public void setTags(Set<String> tags) {
-//        this.tags = tags;
-//    }
-
-    public OffsetDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(OffsetDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public OffsetDateTime getDeadline() {
-        return deadline;
-    }
-
-    public void setDeadline(OffsetDateTime deadline) {
-        this.deadline = deadline;
-    }
-
-    public boolean isCompleted() {
-        return completed;
-    }
-
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
     }
 }

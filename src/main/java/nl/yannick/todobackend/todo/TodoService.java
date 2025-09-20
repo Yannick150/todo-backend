@@ -67,7 +67,7 @@ public class TodoService {
         repo.deleteById(id);
     }
 
-    private String setTagsIfPresent(Optional<Set<String>> tags){
+    private String setTagsIfPresent(Optional<Set<String>> tags) {
         return tags.map(strings -> String.join(",", strings)).orElse(null);
     }
 }
