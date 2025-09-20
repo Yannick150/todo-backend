@@ -6,6 +6,7 @@ import nl.yannick.todobackend.todo.dtos.TodoResultSet;
 import nl.yannick.todobackend.todo.dtos.UpdateTodoRequest;
 import nl.yannick.todobackend.todo.errors.TodoNotFoundException;
 import nl.yannick.todobackend.todo.mappers.TodoMapper;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,8 +26,8 @@ public class TodoService {
 
     @Transactional(readOnly = true)
     public TodoResultSet findAll() {
-        var todo = repo.findAll();
-        return mapper.toWrappedResultSet(todo); // of een PageDto
+        var todos = repo.findAll(Sort.by(Sort.Direction.ASC, "completed"));
+        return mapper.toWrappedResultSet(todos);
     }
 
     @Transactional(readOnly = true)

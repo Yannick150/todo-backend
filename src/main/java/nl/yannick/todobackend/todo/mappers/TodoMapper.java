@@ -5,7 +5,7 @@ import nl.yannick.todobackend.todo.dtos.TodoResultSet;
 import nl.yannick.todobackend.todo.Todo;
 import org.mapstruct.*;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -18,7 +18,8 @@ public interface TodoMapper {
     Set<TodoResult> toResultSet(List<Todo> todos);
 
     default TodoResultSet toWrappedResultSet(List<Todo> todos) {
-        return new TodoResultSet(new HashSet<>(toResultSet(todos)));
+        //LinkedHashSet to keep ordering
+        return new TodoResultSet(new LinkedHashSet<>(toResultSet(todos)));
     }
 
     @Named("parseTags")
