@@ -8,30 +8,34 @@ import nl.yannick.todobackend.Todo.Errors.TodoNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import nl.yannick.todobackend.Todo.Mappers.TodoMapper;
 
 import java.util.List;
 import java.util.UUID;
 
+//TODO service?
 @RestController
 @RequestMapping("/api/todos")
 public class TodoController {
 
     private final TodoRepository repo;
+    private final TodoMapper mapper;
 
-    public TodoController(TodoRepository repo) {
+    public TodoController(TodoRepository repo, TodoMapper mapper) {
         this.repo = repo;
+        this.mapper = mapper;
     }
 
     @GetMapping
     public TodoResultSet findAll() {
         var todos = repo.findAll();
-        return TodoResultSet.fromTodos(todos);
+        return mapper.toWrappedResultSet(todos);
     }
 
     @GetMapping("/{id}")
     public TodoResult findOne(@PathVariable UUID id) {
         var todo = repo.findById(id).orElseThrow(() -> new TodoNotFoundException(id));
-        return TodoResult.FromTodo(todo);
+        return mapper.toResult(todo);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -50,7 +54,7 @@ public class TodoController {
         todo.setDeadline(req.deadline());
         todo.setCompleted(false);
         var saved = repo.save(todo);
-        return TodoResult.FromTodo(saved);
+        return mapper.toResult(saved);
     }
 
     @PatchMapping("/{id}")
@@ -68,7 +72,7 @@ public class TodoController {
         if (req.deadline() != null) todo.setDeadline(req.deadline());
         if (req.completed() != null) todo.setCompleted(req.completed());
         var saved = repo.save(todo);
-        return TodoResult.FromTodo(saved);
+        return mapper.toResult(saved);
     }
 
     @DeleteMapping("/{id}")
