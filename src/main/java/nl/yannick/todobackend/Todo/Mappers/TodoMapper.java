@@ -1,11 +1,11 @@
 package nl.yannick.todobackend.Todo.Mappers;
 
+import nl.yannick.todobackend.Todo.Dtos.CreateTodoRequest;
 import nl.yannick.todobackend.Todo.Dtos.TodoResult;
 import nl.yannick.todobackend.Todo.Dtos.TodoResultSet;
+import nl.yannick.todobackend.Todo.Dtos.UpdateTodoRequest;
 import nl.yannick.todobackend.Todo.Todo;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Named;
+import org.mapstruct.*;
 
 import java.util.HashSet;
 import java.util.List;
@@ -23,7 +23,6 @@ public interface TodoMapper {
         return new TodoResultSet(new HashSet<>(toResultSet(todos)));
     }
 
-    // helper
     @Named("parseTags")
     default List<String> parseTags(String tags) {
         if (tags == null || tags.isBlank()) return List.of();
